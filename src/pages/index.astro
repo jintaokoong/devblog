@@ -1,0 +1,77 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+
+const recentPosts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header title={SITE_TITLE} />
+    <main>
+      <h1>Henry's blog</h1>
+      <p>
+        Welcome to my blog! I'm a software engineer at <a
+          href="https://www.orix.com.my">ORIX Malaysia</a
+        > and I like to write about things I learn.
+      </p>
+      <p>
+        The point of this blog is to journal and document my learning process
+        through the challenges I face at work and also in my personal projects.
+        I hope that by writing about my experiences, I can help others who are
+        facing similar challenges.
+      </p>
+      <p>
+        Some of my favorite fields in software engineering are:
+        <ul>
+          <li>Web development</li>
+          <li>Machine Learning</li>
+        </ul>
+      </p>
+      <p>
+        For more information about me, check out my <a href="/about"
+          >about page</a
+        >.
+      </p>
+      <h2>Recent Posts</h2>
+      <ul class="list-reset">
+        {
+          recentPosts.map((post) => (
+            <li>
+              <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+              <time
+                datetime={post.data.pubDate.toISOString()}
+                style="margin: 0; margin-top: 0.25rem; font-size: 0.9rem; color: #666; display: block;"
+              >
+                {post.data.pubDate.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+    <Footer />
+    <style>
+      .list-reset {
+        list-style: none;
+        padding-left: 0;
+      }
+      .list-reset li {
+        margin-bottom: 1em;
+      }
+    </style>
+  </body>
+</html>

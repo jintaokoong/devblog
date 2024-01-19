@@ -1,0 +1,27 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE } from "../consts";
+---
+
+<header>
+  <nav>
+    <div>
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/blog">Blog</HeaderLink>
+      <HeaderLink href="/about">About</HeaderLink>
+    </div>
+  </nav>
+</header>
+<style>
+  nav {
+    margin-bottom: 1.5rem;
+  }
+
+  a {
+    margin-right: 0.5rem;
+  }
+
+  a:last-child {
+    margin-right: 0;
+  }
+</style>
