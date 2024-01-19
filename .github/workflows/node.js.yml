@@ -81,5 +81,5 @@ jobs:
         accountId: ${{ vars.CF_ACCOUNT_ID }}
         # The name of the Pages project to upload to
         projectName: shaggy-star
-        directory: dist
+        directory: .
           
