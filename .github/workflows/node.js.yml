@@ -45,3 +45,32 @@ jobs:
       run: pnpm install
     - name: Run build
       run: pnpm build
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.2.0
+      with:
+        # Artifact name
+        name: artifact
+        # A file, directory or wildcard pattern that describes what to upload
+        path: dist/
+        # The desired behavior if no files are found using the provided path.
+        if-no-files-found: error
+        retention-days: 7
+          
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Cloudflare Pages GitHub Action
+      # You may pin to the exact commit or the version.
+      # uses: cloudflare/pages-action@f0a1cd58cd66095dee69bfa18fa5efd1dde93bca
+      uses: cloudflare/pages-action@v1.5.0
+      with:
+        # Cloudflare API Token
+        apiToken: ${{ secrets.CF_PAGES_TOKEN }}
+        # Cloudflare Account ID
+        accountId: ${{ vars.CF_ACCOUNT_ID }}
+        # The name of the Pages project to upload to
+        projectName: shaggy-star
+        directory: dist
+          
