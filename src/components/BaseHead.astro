@@ -48,3 +48,12 @@ const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
+{
+  !import.meta.env.DEV && (
+    <script
+      defer
+      src="https://eu.umami.is/script.js"
+      data-website-id={import.meta.env.UMAMI_WEB_ID}
+    />
+  )
+}
